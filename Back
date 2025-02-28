@@ -1,0 +1,83 @@
+Funcoes
+
+- Data
+#include <stdio.h>
+#include <string.h>
+
+typedef struct {
+	int ID;
+	char nome[50];
+	int dia_nasc;
+	int mes_nasc;
+	int ano_nasc;
+	int idade;
+	char sexo[20];
+} pessoa;
+
+void create(pessoa cads[], int total_pes){
+	printf("Cadastro em andamento:\n\n");
+		for(int i = 0; i < total_pes ; i++){
+			printf("Informe o Nome completo:\n");
+				scanf(" %[^\n]", cads[i].nome);
+				
+				printf("Informe a Data de Nascimento:\n");
+					printf("Dia:");
+						scanf("%i",&cads[i].dia_nasc);
+					printf("Mes:");
+						scanf("%i",&cads[i].mes_nasc);
+					printf("Ano:");
+						scanf("%i",&cads[i].ano_nasc);	
+									
+					char sexo;
+				
+					printf("Selecione o sexo da pessoa [M]Masculino [F]Feminino [P]Prefiro não Informar: ");
+					scanf(" %c", &sexo); 
+
+						switch (sexo) {
+    						case 'M':
+        						strcpy(cads[i].sexo, "Masculino");
+        							break;
+    						case 'F':
+        						strcpy(cads[i].sexo, "Feminino");
+        							break;
+    						case 'P':
+        						strcpy(cads[i].sexo, "Prefiro Não Informar");
+        							break;
+    						default:
+        					strcpy(cads[i].sexo, "Desconhecido");
+        						break;
+}
+				
+		}
+				cads[i].idade = (pensar como cadastrar a idade com base na data de nasc);
+					
+(ID - Nome - Idade - Sexo)
+
+>> Armazenar estes dados por json;
+}
+
+void edit(){
+
+>> Edicao Solicitando o ID para editar seu respectivo cadastro;
+}
+
+void delete(){
+while(){
+	
+if(se o id existe) permite a exlclusao, solicita a confirmaacao para exclusao >> if(valida a solicitacao) S = excluir 
+N = aborta o processo;
+
+else (retorna mensagem de cadastro inexistente, solicita se deseja inserir um novo registro ou abortar exlusao
+(usar um switch case));
+}
+}
+>> Deletar cadastro pelo ID, e confirmar a exclusao, caso nao localize o codigo, informar
+que nao foi localizado;
+
+}
+
+
+
+- Editar
+- Exibir
+- Deletar
