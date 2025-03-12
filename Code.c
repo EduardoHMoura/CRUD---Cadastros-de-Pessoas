@@ -1,73 +1,71 @@
-
 #include <stdio.h>
 #include <string.h>
+#include <stdlib.h>
+#define qttdPessoas 2
 
 typedef struct {
-	int ID;
-	char nome[50];
-	int dia_nasc;
-	int mes_nasc;
-	int ano_nasc;
-	int idade;
-	char sexo[20];
+    char nome[50];
+    char sexo[20];
+    int idade;
+    int dia_nasc, mes_nasc, ano_nasc;
 } pessoa;
 
-void create(pessoa cads[], int total_pes){
-	printf("Cadastro em andamento:\n\n");
-		for(int i = 0; i < total_pes ; i++){
-			printf("Informe o Nome completo:\n");
-				scanf(" %[^\n]", cads[i].nome);
-				
-				printf("Informe a Data de Nascimento:\n");
-					printf("Dia:");
-						scanf("%i",&cads[i].dia_nasc);
-					printf("Mes:");
-						scanf("%i",&cads[i].mes_nasc);
-					printf("Ano:");
-						scanf("%i",&cads[i].ano_nasc);	
-									
-					char sexo;
-				
-					printf("Selecione o sexo da pessoa [M]Masculino [F]Feminino [P]Prefiro não Informar: ");
-					scanf(" %c", &sexo); 
+void cadastrarPessoa(pessoa *c, int tam);
+void exibirPessoa(pessoa *c, int tam);
 
-						switch (sexo) {
-    						case 'M':
-        						strcpy(cads[i].sexo, "Masculino");
-        							break;
-    						case 'F':
-        						strcpy(cads[i].sexo, "Feminino");
-        							break;
-    						case 'P':
-        						strcpy(cads[i].sexo, "Prefiro Não Informar");
-        							break;
-    						default:
-        					strcpy(cads[i].sexo, "Desconhecido");
-        						break;
+int main(){
+    
 }
-				
+
+void cadastrarPessoa(pessoa *c, int tam) {
+    int cadastro = 1; 
+    for(int i = 0; i < tam; i++) {
+        
+        printf("Cadastro ID - %i:\n", cadastro++);
+        printf("Informe o nome:\n");
+        scanf("%49[^\n]s", c[i].nome);
+        getchar();
+        
+        printf("Informe a idade:\n");
+        scanf("%i", &c[i].idade);
+        getchar();
+                    
+		printf("Informe a Data de Nascimento:\n");
+		printf("Dia:");
+		scanf("%i",&dia_nasc);
+		printf("Mes:");
+		scanf("%i",&mes_nasc);
+		printf("Ano:");
+		scanf("%i",&ano_nasc);
+
+		printf("Selecione o sexo da pessoa [M]Masculino [F]Feminino [P]Prefiro nC#o Informar: ");
+		scanf(" %c", &sexo);
+
+		switch (sexo) {
+		    
+		case 'M':
+			strcpy(pessoa[i].sexo, "Masculino");
+			break;
+		case 'F':
+		    strcpy(pessoa[i].sexo, "Feminino");
+	        break;
+		case 'P':
+		    strcpy(pessoa[i].sexo, "Prefiro NC#o Informar");
+		    break;
+		default:
+		    strcpy(cads[i].sexo, "Desconhecido");
+		    break;
 		}
-				cads[i].idade = (pensar como cadastrar a idade com base na data de nasc);
-					
-(ID - Nome - Idade - Sexo)
-
->> Armazenar estes dados por json;
+	}
+        system("cls");
 }
 
-void edit(){
+void exibirPessoa(pessoa *c, int tam) {
 
->> Edicao Solicitando o ID para editar seu respectivo cadastro;
-}
-
-void delete(){
-while(){
-	
-if(se o id existe) permite a exlclusao, solicita a confirmaacao para exclusao >> if(valida a solicitacao) S = excluir 
-N = aborta o processo;
-
-else (retorna mensagem de cadastro inexistente, solicita se deseja inserir um novo registro ou abortar exlusao
-(usar um switch case));
-}
-}
-
+    for(int i = 0; i < tam; i++) {
+        printf("\nCadastro ID - %i:\n", i + 1);
+        printf("Nome: %s\n", c[i].nome);
+        printf("Idade: %d\n", c[i].idade);
+        printf("Sexo: %s\n", c[i].sexo);
+    }
 }
