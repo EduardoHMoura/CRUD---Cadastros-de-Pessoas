@@ -144,6 +144,7 @@ void exibirPessoa(pessoa *c) {
         printf("Nenhum cadastro realizado!\n");
         return;
     }
+    lerArquivo(c);
     for(int i = 0; i < cadastro; i++) {
         printf("\nCadastro ID - %i:\n", i + 1);
         printf("Nome: %s\n", c[i].name);
@@ -167,29 +168,30 @@ void excluirCadastro(pessoa *c) {
     if(qttdExcluir > cadastro){
         printf("Nao e possivel excluir esta quantidade de registros! Quantidade de cadastros menor que a informada!\n"); 
     } else { 
-    for(int exc = 0; exc < qttdExcluir; exc++){
-    printf("Digite o ID do cadastro que deseja excluir: \n");
-    scanf("%d", &idProcurado);
+        for(int exc = 0; exc < qttdExcluir; exc++){
+            printf("Digite o ID do cadastro que deseja excluir: \n");
+            scanf("%d", &idProcurado);
     int encontrado = 0;
 
     for (int i = 0; i < cadastro; i++) {
         if (c[i].id == idProcurado) {
             for (int j = i; j < cadastro - 1; j++) {
                 c[j] = c[j + 1];
+                c[j].id = j + 1; 
             }
             cadastro--;
+            salvarArquivo(pessoas);
             printf("Cadastro excluido com sucesso!\n\n");
             encontrado = 1;
             break;
             }
         }
 
-        if (encontrado == 0) {
-            printf("Item com o ID %d nao encontrado nos cadastros.\n\n", idProcurado);
+            if (encontrado == 0) {
+                printf("Item com o ID %d nao encontrado nos cadastros.\n\n", idProcurado);
+            }
         }
     }
-    }
-    salvarArquivo(c);
 }
 
 void atualizarCadastro(pessoa *c) {
@@ -200,6 +202,7 @@ void atualizarCadastro(pessoa *c) {
     switch (option){
 
     case 1:
+    lerArquivo(c);
     printf("Digite o ID do cadastro que deseja atualizar: ");
     scanf("%d", &idProcurado);
 
@@ -208,6 +211,7 @@ void atualizarCadastro(pessoa *c) {
         if (c[i].id == idProcurado) {
             printf("Novo nome: ");
             scanf(" %[^\n]", c[i].name);
+            salvarArquivo(pessoas);
             
             printf("Selecione o novo sexo da pessoa [M]Masculino [F]Feminino [O]Outro: ");
             char condition;
@@ -227,19 +231,46 @@ void atualizarCadastro(pessoa *c) {
                     strcpy(c[i].sexo, "Nao Informado");
                     break;
             }
-
-            printf("Informe a nova idade:\n");
-            scanf("%i", &c[i].age);
-            getchar();
+            salvarArquivo(pessoas);
+            do{
+                printf("Informe a nova idade:\n");
+                scanf("%i", &c[i].age);
+                salvarArquivo(pessoas);
+                getchar();
+                if((c[cadastro].age > 120) || (c[cadastro].age < 0)){
+                    printf("Idade invalida! Informe uma idade valida!\n");
+                }
+            } while (c[cadastro].age > 120 || c[cadastro].age < 0);
 
             printf("Informe a nova Data de Nascimento:\n");
-            printf("Dia:");
-            scanf("%i", &c[i].birthDate.birthDay);
-            printf("Mes:");
-            scanf("%i", &c[i].birthDate.birthMonth);
-            printf("Ano:");
-            scanf("%i", &c[i].birthDate.birthYear);
-            getchar();
+            do{
+                printf("Dia:");
+                scanf("%i", &c[i].birthDate.birthDay);
+                salvarArquivo(pessoas);
+                getchar();
+                if(c[cadastro].birthDate.birthDay < 0 || c[cadastro].birthDate.birthDay > 31){
+                    printf("Dia de nascimento invalido! Informe uma data valida!\n"); 
+                } 
+            } while (c[cadastro].birthDate.birthDay < 0 || c[cadastro].birthDate.birthDay > 31);
+            salvarArquivo(pessoas);
+            do{
+                printf("Mes:");
+                scanf("%i", &c[i].birthDate.birthMonth);
+                salvarArquivo(pessoas);
+                getchar();
+                if(c[cadastro].birthDate.birthMonth < 0 || c[cadastro].birthDate.birthMonth > 12){
+                    printf("Mes de nascimento invalido! Informe uma data valida!\n"); 
+                } 
+            } while (c[cadastro].birthDate.birthMonth < 0 || c[cadastro].birthDate.birthMonth > 12);
+            do{
+                printf("Ano:");
+                scanf("%i", &c[i].birthDate.birthYear);
+                salvarArquivo(pessoas);
+                getchar();
+                if((c[i].birthDate.birthYear < 1900) || (c[i].birthDate.birthYear > 2025)){
+                    printf("Ano de nascimento invalido! Informe uma data valida!\n"); 
+                } 
+            } while (c[i].birthDate.birthYear < 1900 || c[i].birthDate.birthYear > 2025);
 
             printf("Cadastro atualizado com sucesso!\n\n");
             encontrado = 1;
@@ -343,7 +374,8 @@ void alterarIdade(pessoa *c){
 
             do{
                 printf("Informe a nova idade:\n");
-                scanf("%i", &c[cadastro].age);
+                scanf("%i", &c[i].age);
+                salvarArquivo(pessoas);
                 getchar();
                 if((c[cadastro].age > 120) || (c[cadastro].age < 0)){
                     printf("Idade invalida! Informe uma idade valida!\n");
@@ -358,7 +390,7 @@ void alterarIdade(pessoa *c){
     if (encontrado == 0) {
         printf("Cadastro com o ID %d nao encontrado nos registros.\n\n", idProcurado);
     }
-    salvarArquivo(pessoas);
+
 }
 
 void alterarDataNasc(pessoa *c){
@@ -373,7 +405,8 @@ void alterarDataNasc(pessoa *c){
             
             do{
                 printf("Dia:");
-                scanf("%i", &c[cadastro].birthDate.birthDay);
+                scanf("%i", &c[i].birthDate.birthDay);
+                salvarArquivo(pessoas);
                 getchar();
                 if(c[cadastro].birthDate.birthDay < 0 || c[cadastro].birthDate.birthDay > 31){
                     printf("Dia de nascimento invalido! Informe uma data valida!\n"); 
@@ -381,7 +414,8 @@ void alterarDataNasc(pessoa *c){
             } while (c[cadastro].birthDate.birthDay < 0 || c[cadastro].birthDate.birthDay > 31);
             do{
                 printf("Mes:");
-                scanf("%i", &c[cadastro].birthDate.birthMonth);
+                scanf("%i", &c[i].birthDate.birthMonth);
+                salvarArquivo(pessoas);
                 getchar();
                 if(c[cadastro].birthDate.birthMonth < 0 || c[cadastro].birthDate.birthMonth > 12){
                     printf("Mes de nascimento invalido! Informe uma data valida!\n"); 
@@ -389,14 +423,13 @@ void alterarDataNasc(pessoa *c){
             } while (c[cadastro].birthDate.birthMonth < 0 || c[cadastro].birthDate.birthMonth > 12);
             do{
                 printf("Ano:");
-                scanf("%i", &c[cadastro].birthDate.birthYear);
+                scanf("%i", &c[i].birthDate.birthYear);
+                salvarArquivo(pessoas);
                 getchar();
                 if((c[cadastro].birthDate.birthYear < 1900) || (c[cadastro].birthDate.birthYear > 2025)){
                     printf("Ano de nascimento invalido! Informe uma data valida!\n"); 
                 } 
             } while (c[cadastro].birthDate.birthYear < 1900 || c[cadastro].birthDate.birthYear > 2025);
-        
-
             printf("Cadastro atualizado com sucesso!\n\n");
             encontrado = 1;
             break;
@@ -405,7 +438,6 @@ void alterarDataNasc(pessoa *c){
     if (encontrado == 0) {
         printf("Cadastro com o ID %d nao encontrado nos registros.\n\n", idProcurado);
     }
-    salvarArquivo(pessoas);
 }
 
 void alterarNome(pessoa *c){
@@ -420,7 +452,7 @@ void alterarNome(pessoa *c){
             
             printf("Novo nome: ");
             scanf(" %[^\n]", c[i].name);
-
+            salvarArquivo(pessoas);
             printf("Cadastro atualizado com sucesso!\n\n");
             encontrado = 1;
             break;
@@ -429,7 +461,7 @@ void alterarNome(pessoa *c){
     if (encontrado == 0) {
         printf("Cadastro com o ID %d nao encontrado nos registros.\n\n", idProcurado);
     }
-    salvarArquivo(pessoas);
+
 }
 
 void alterarSexo(pessoa *c){
@@ -449,18 +481,21 @@ void alterarSexo(pessoa *c){
             switch (condition) {
                 case 'M':
                     strcpy(c[i].sexo, "Masculino");
+                    salvarArquivo(pessoas);
                     break;
                 case 'F':
                     strcpy(c[i].sexo, "Feminino");
+                    salvarArquivo(pessoas);
                     break;
                 case 'O':
                     strcpy(c[i].sexo, "Outro");
+                    salvarArquivo(pessoas);
                     break;
                 default:
                     strcpy(c[i].sexo, "Nao Informado");
+                    salvarArquivo(pessoas);
                     break;
             }
-
             printf("Cadastro atualizado com sucesso!\n\n");
             encontrado = 1;
             break;
@@ -469,7 +504,6 @@ void alterarSexo(pessoa *c){
     if (encontrado == 0) {
         printf("Cadastro com o ID %d nao encontrado nos registros.\n\n", idProcurado);
     }
-    salvarArquivo(pessoas);
 }
 
 void menuAtualizar(){
