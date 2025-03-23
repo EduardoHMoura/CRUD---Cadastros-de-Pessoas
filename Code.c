@@ -473,7 +473,7 @@ void alterarSexo(pessoa *c){
 }
 
 void menuAtualizar(){
-    printf("\n\t|=================================|\n");
+    printf("\n\t|==================================|\n");
     printf("\t|Qual informacao deseja alterar?   |\n");
     printf("\t|[1] Todo o cadastro               |\n");
     printf("\t|[2] Data de nascimento do cadastro|\n");
